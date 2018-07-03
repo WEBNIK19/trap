@@ -24,18 +24,25 @@ class RequestController < ApplicationController
       })
 			 head :no_content
 		else
-			 head :forbidden
+			 head :internal_server_error
 		end
  	end
 
-# GET 
+# GET /:trap_id/requests
 	def index
 		@requests = Request.where(:trap_id=>params[:trap_id]).order('created_at DESC')
-		@trap_id = @requests.first.trap_id
+		if @requests.take.blank?
+			redirect_to root_url, :status => :not_found
+		else
+			@trap_id = @requests.first.trap_id
+		end
 	end
 
-# GET 
+# GET /:trap_id/request/:id
 	def show
-		@request = Request.find(params[:id])
+		@request = Request.where(:id => params[:id]).first
+		if @request.blank?
+			head :not_found
+		end
 	end
 end
