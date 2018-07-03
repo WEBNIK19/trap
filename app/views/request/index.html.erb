@@ -1,0 +1,75 @@
+ 
+ <script>
+    
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('86987ac565e812024804', {
+      cluster: 'eu',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('new-request', function(data) {
+      $('#requests').prepend('<tr><td>'+
+        data.method  
+        +'</td><td>'+
+        data.remote_ip
+        +'</td><td>'+
+        data.scheme
+        +'</td><td>'+
+        data.params
+        +'</td><td>'+
+        data.created_at
+        +'</td><td><a href="/firefox/requests/'+
+        data.request_id
+        +'" class="btn btn-default">More</a></td></tr>')
+    });
+    
+  </script>
+  <div class="container">
+    <div class="row">
+      <p id="notice"><%= notice %></p>
+      
+      <h1><%= @trap_id %></h1>
+      
+      <h2>Requests</h2>
+
+      <table class='table table-bordered'>
+        <thead>
+          <tr>
+            <th><strong>Method:</strong></th>
+            <th>Ip:</th>
+            <th>Scheme:</th>
+            <th>Params:</th>
+            <th>Time:</th>
+          </tr>
+        </thead>
+
+        <tbody id='requests'>
+          <% @requests.each do |request| %>
+          <tr>
+            <td>
+              <%= request.method %>
+            </td>
+            <td>
+              <%= request.remote_ip %>
+            </td>
+            <td>
+              <%= request.scheme %>
+            </td>
+            <td>
+              <%= request.params %>
+            </td>
+
+            <td><%= request.created_at.strftime("%F %T") %></td>
+            <td><%= link_to 'More', request_path(@trap_id, request), class: "btn btn-default" %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+  </div>
+</div>
+
+
