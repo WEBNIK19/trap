@@ -1,15 +1,16 @@
 class RequestController < ApplicationController
 	
 	def new
+		headers = request.env.select{|k, v| k.in?(ActionDispatch::Http::Headers::CGI_VARIABLES) || k =~ ActionDispatch::Http::Headers::HTTP_HEADER}
+		
 		@my_request = Request.create(
 			:trap_id => params[:trap_id], 
 			:method => request.method , 
 			:remote_ip => request.remote_ip, 
 			:scheme => request.scheme, 
 			:params => request.parameters,
-      :headers => Hash.new(request.headers),
-      :cookies => cookies.to_a,
-      :request_env => request.env);
+      :headers => headers,
+      :cookies => cookies.to_a);
 
 		if @my_request.persisted? 
 			 head :no_content

@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20180702234042) do
     t.string "scheme"
     t.text "headers"
     t.text "cookies"
-    t.text "request_env"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

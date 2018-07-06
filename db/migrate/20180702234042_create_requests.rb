@@ -8,7 +8,6 @@ class CreateRequests < ActiveRecord::Migration[5.1]
       t.string :scheme
       t.text :headers
       t.text :cookies
-      t.text :request_env
 
       t.timestamps
     end
