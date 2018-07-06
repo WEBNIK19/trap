@@ -12,16 +12,6 @@ class RequestController < ApplicationController
       :request_env => request.env);
 
 		if @my_request.persisted? 
-			 Pusher.trigger('my-channel', 'new-request', {
-        request_id:  @my_request.id,
-        remote_ip:   @my_request.remote_ip,
-        method:      @my_request.method, 
-        params:      @my_request.params,
-        scheme:      @my_request.scheme,
-        headers:     @my_request.headers,
-        cookies:     @my_request.cookies,
-        created_at:  @my_request.created_at.strftime('%F %T')
-      })
 			 head :no_content
 		else
 			 head :internal_server_error
