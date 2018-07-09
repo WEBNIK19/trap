@@ -5,7 +5,7 @@ class RequestController < ApplicationController
 		
 		@my_request = Request.create(
 			:trap_id => params[:trap_id], 
-			:method => request.method , 
+			:method => request.method, 
 			:remote_ip => request.remote_ip, 
 			:scheme => request.scheme, 
 			:params => request.parameters,

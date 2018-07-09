@@ -5,7 +5,7 @@ class Request < ApplicationRecord
 
   private
   	def pusher_trigger
-  		Pusher.trigger('my-channel', 'new-request', {
+  		Pusher.trigger(self.trap_id, 'new-request', {
         request_id:  self.id,
         remote_ip:   self.remote_ip,
         method:      self.method, 
